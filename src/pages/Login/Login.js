@@ -3,8 +3,11 @@ import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
 import { validateEmail } from '../../utils';
 import './Login.css';
+import { connect } from 'react-redux';
+import axios from 'axios';
+import { ROOT_URL } from '../../utils';
 
-export default class Login extends Component {
+class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -13,6 +16,16 @@ export default class Login extends Component {
 			emailError: '',
 			passwordError: ''
 		};
+	}
+
+	componentDidMount() {
+		axios.get(ROOT_URL).then(respJson => {
+			let remoteData = respJson.data;
+			let images = remoteData.map((image, index) => {
+				return { id: index, src: image.urls.regular, favorite: false };
+			});
+			this.props.updateImages(images);
+		});
 	}
 
 	onChangeEmail = event => {
@@ -88,3 +101,14 @@ export default class Login extends Component {
 		);
 	}
 }
+
+function mapDispatchToProps(dispatch) {
+	return {
+		updateImages: (payload) => dispatch({ type: "UPDATE_IMAGES", payload})
+	};
+};
+
+export default connect(
+	null,
+	mapDispatchToProps
+)(Login);

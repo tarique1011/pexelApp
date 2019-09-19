@@ -4,6 +4,9 @@ import ImageCard from '../../components/ImageCard/ImageCard';
 import Button from '../../components/Button/Button';
 import { ROOT_URL } from '../../utils';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import store from '../../store';
+import { updateImages } from '../../actions/imageAction';
 
 class Home extends Component {
 	constructor(props) {
@@ -21,6 +24,8 @@ class Home extends Component {
 			});
 			this.setState({ images });
 		});
+
+		console.log(store.getState());
 	}
 
 	goToFavorites = () => {
@@ -54,7 +59,6 @@ class Home extends Component {
 	}
 
 	render() {
-		console.log(this.state.images);
 		return (
 			<div className="homeContainer">
 				{this.renderHeader()}
@@ -64,4 +68,10 @@ class Home extends Component {
 	}
 }
 
-export default Home;
+function mapStateToProps(state) {
+	return {
+		images: state.images
+	};
+}
+
+export default connect(mapStateToProps)(Home);
