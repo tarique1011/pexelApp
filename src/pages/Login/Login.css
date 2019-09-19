@@ -1,0 +1,41 @@
+.loginContainer {
+	margin-left: 50px;
+	margin-right: 50px;
+}
+
+.header {
+	height: 100px;
+	padding-top: 50px;
+	padding-left: 20px;
+	display: flex;
+	flex-direction: column;
+}
+
+.headerTitle {
+	font-size: 50px;
+	color: #181818;
+}
+
+.headerSubtitle {
+	font-size: 13px;
+	color: #585858;
+}
+
+.footer {
+	margin-top: 30px;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.signIn {
+	font-size: 25px;
+	font-weight: 500;
+	margin-bottom: 20px;
+}
+
+.submitButton {
+	margin-top: 40px;
+}
