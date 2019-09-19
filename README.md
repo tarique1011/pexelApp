@@ -1,4 +1,4 @@
-## Pexel App
+# Pexel App
 
 Web application built in React.js framework.
 
