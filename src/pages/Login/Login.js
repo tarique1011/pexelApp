@@ -6,6 +6,7 @@ import './Login.css';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { ROOT_URL } from '../../utils';
+import { updateImages } from '../../actions/imageAction';
 
 class Login extends Component {
 	constructor(props) {
@@ -26,6 +27,7 @@ class Login extends Component {
 			});
 			this.props.updateImages(images);
 		});
+		
 	}
 
 	onChangeEmail = event => {
@@ -53,7 +55,7 @@ class Login extends Component {
 	handleSubmit = async () => {
 		let user = { user: this.state.email, password: this.state.password };
 		localStorage.setItem('user', JSON.stringify(user));
-		window.location.href = '/home';
+		this.props.history.push('/home');
 	};
 
 	renderHeader() {
@@ -104,7 +106,7 @@ class Login extends Component {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		updateImages: (payload) => dispatch({ type: "UPDATE_IMAGES", payload})
+		updateImages: (payload) => dispatch(updateImages(payload))
 	};
 };
 

@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 import './Home.css';
 import ImageCard from '../../components/ImageCard/ImageCard';
 import Button from '../../components/Button/Button';
-import { ROOT_URL } from '../../utils';
-import axios from 'axios';
+import { updateImages, incrementFavoriteCount, resetCount } from '../../actions/imageAction';
 import { connect } from 'react-redux';
-import store from '../../store';
-import { updateImages } from '../../actions/imageAction';
 
 class Home extends Component {
 	constructor(props) {
@@ -16,25 +13,30 @@ class Home extends Component {
 			loading: true
 		};
 	}
-	componentDidMount() {
-		axios.get(ROOT_URL).then(respJson => {
-			let remoteData = respJson.data;
-			let images = remoteData.map((image, index) => {
-				return { id: index, src: image.urls.regular, favorite: false };
-			});
-			this.setState({ images });
-		});
-
-		console.log(store.getState());
-	}
 
 	goToFavorites = () => {
-		window.location.href = '/favorites';
+		this.props.history.push('/favorites');
 	};
 
 	handleLogOut = () => {
-		window.location.href = '/';
+		localStorage.removeItem('user');
+		this.props.resetCount();
+		this.props.history.push('/');
 	};
+
+	addToFavorites(image) {
+		if (!image.favorite) {
+			let images = [...this.props.images];
+			const { id } = image;
+			for (const image of images) {
+				if (image.id === id) {
+					image.favorite = true;
+				}
+			}
+			this.props.updateImages(images);
+			this.props.incrementFavoriteCount();
+		}
+	}
 
 	renderHeader() {
 		return (
@@ -53,8 +55,8 @@ class Home extends Component {
 	}
 
 	renderImages() {
-		return this.state.images.map(image => {
-			return <ImageCard key={image.id} image={image} />;
+		return this.props.images.map(image => {
+			return <ImageCard key={image.id} image={image} homeScreen handleFavorite={() => this.addToFavorites(image)} />;
 		});
 	}
 
@@ -74,4 +76,15 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps)(Home);
+function mapDispatchToProps(dispatch) {
+	return {
+		updateImages: payload => dispatch(updateImages(payload)),
+		incrementFavoriteCount: () => dispatch(incrementFavoriteCount()),
+		resetCount: () => dispatch(resetCount())
+	};
+}
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Home);

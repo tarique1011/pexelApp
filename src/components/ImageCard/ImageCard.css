@@ -11,7 +11,7 @@
 
 .favoriteButton {
 	position: relative;
-	bottom: 50px;
+	bottom: 52px;
 	height: 50px;
 	display: flex;
 	align-items: center;
@@ -20,13 +20,19 @@
 }
 
 .addToFavorite {
-	background-color: rgb(255, 255, 255, 0.4);
-	color: rgb(0, 0, 0, 0.5);
+	background-color: rgb(0, 0, 0, 0.5);
+	color: rgb(255, 255, 255, 0.6);
 }
 
 .addedToFavorite {
-	background-color: rgb(255, 255, 255, 0.8);
-	color: rgb(0, 0, 0);
+	background-color: rgb(0, 0, 0, 1);
+	color: rgb(255, 255, 255);
+}
+
+.addToFavorite:hover {
+	cursor: pointer;
+	background-color: rgb(0, 0, 0, 0.8);
+	color: rgb(255, 255, 255);
 }
 
 .favoriteText {
@@ -34,8 +40,25 @@
 	font-weight: 500;
 }
 
-.favoriteButton:hover {
+.deleteButton {
+	position: relative;
+	bottom: 51px;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 300px;
+	background-color: rgb(0, 0, 0, 0.5);
+	color: rgb(255, 255, 255, 0.6);
+}
+
+.deleteText {
+	font-size: 16px;
+	font-weight: 500;
+}
+
+.deleteButton:hover {
 	cursor: pointer;
-	background-color: rgb(255, 255, 255, 0.8);
-	color: rgb(0, 0, 0);
+	background-color: rgb(255, 0, 0, 0.8);
+	color: rgb(255, 255, 255);
 }
